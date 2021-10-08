@@ -1,0 +1,29 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  liveadhocLiveMediaLiveMonitor:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: monitor.handler
+      Runtime: python3.8
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 30
+      Role: >-
+        arn:aws:iam::394761604539:role/live-adhoc-LiveMediaLiveMonitorFuncRole-1XOCGZT5K0X8J
+      Events:
+        CloudWatchEvent1:
+          Type: CloudWatchEvent
+          Properties:
+            Pattern:
+              detail-type:
+                - MediaLive Channel State Change
+              source:
+                - aws.medialive
+      Environment:
+        Variables:
+          DynamoDBName: live-adhoc-MediaLiveState
+      Tags:
+        'lambda:createdBy': SAM

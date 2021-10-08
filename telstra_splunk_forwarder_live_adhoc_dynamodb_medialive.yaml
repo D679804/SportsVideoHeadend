@@ -1,0 +1,51 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  telstrasplunkforwarderliveadhocdynamodbmedialive:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: index.handler
+      Runtime: nodejs14.x
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 3
+      Role: >-
+        arn:aws:iam::394761604539:role/service-role/telstra_splunk_forwarder_live_adhoc_dynamodb_media-role-0leny1z3
+      Events:
+        DynamoDB1:
+          Type: DynamoDB
+          Properties:
+            Stream:
+              'Fn::GetAtt':
+                - Table1
+                - StreamArn
+            StartingPosition: LATEST
+            BatchSize: 100
+      VpcConfig:
+        SecurityGroupIds:
+          - sg-06745aa53f9877247
+        SubnetIds:
+          - subnet-0d56d885ceb818bee
+          - subnet-03aaf4a0e7b7bf1af
+          - subnet-0bc04b75b336401dc
+      Environment:
+        Variables:
+          SPLUNK_HEC_TOKEN: cbdfeff6-8748-44f4-b64a-ce6c5c2c1c76
+          SPLUNK_HEC_URL: >-
+            https://media-splunk-ssl.privatemediacloudservice.telstra.com:8081/services/collector/event
+  Table1:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 5
+        WriteCapacityUnits: 5
+      StreamSpecification:
+        StreamViewType: NEW_IMAGE

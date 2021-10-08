@@ -1,0 +1,23 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  sportvodapimediaPackageAssetDeleteFunction1K1PCJ5HT8W6R:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: package.handler
+      Runtime: python3.8
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 10
+      Role: >-
+        arn:aws:iam::394761604539:role/sportvodapi-mediaPackageAssetsRole-NYVFX4F010DA
+      Events:
+        Api1:
+          Type: Api
+          Properties:
+            Path: /vodpackage/assetdelete
+            Method: POST
+      Tags:
+        'lambda:createdBy': SAM

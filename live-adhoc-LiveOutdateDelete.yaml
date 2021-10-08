@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: 'AWS::Serverless-2016-10-31'
+Description: An AWS Serverless Specification template describing your function.
+Resources:
+  liveadhocLiveOutdateDelete:
+    Type: 'AWS::Serverless::Function'
+    Properties:
+      Handler: live.handler
+      Runtime: python3.8
+      CodeUri: .
+      Description: ''
+      MemorySize: 128
+      Timeout: 30
+      Role: >-
+        arn:aws:iam::394761604539:role/live-adhoc-LiveOutdateDeleteFuncRole-1VQSO2MF8THNT
+      Environment:
+        Variables:
+          AWS_Region: ap-southeast-2
+          Access_Key: AKIAVX2NABW56U46YKOY
+          Defer: '40'
+          DynamonDBName: live-adhoc
+          MediaLiveAPIHost: ovqm6v1rg1.execute-api.ap-southeast-2.amazonaws.com
+          MediaLiveAPIStage: prod
+          Secret_Name: telstra_medialive_api
+      Tags:
+        'lambda:createdBy': SAM
